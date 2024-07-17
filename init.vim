@@ -12,9 +12,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'Chiel92/vim-autoformat'
 Plug 'dense-analysis/ale'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 call plug#end()
 
+colorscheme catppuccin
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
