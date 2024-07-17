@@ -1,0 +1,87 @@
+global !p
+def maths():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+endglobal
+
+snippet sy "sympy block " w
+sympy ${1:${VISUAL:}} sympy$0
+endsnippet
+
+priority 10000
+snippet 'sympy(.*)sympy' "evaluate sympy" wr
+`!p
+from latex2sympy2 import latex2latex
+snip.rv = latex2latex(match.group(1))
+`
+endsnippet
+
+context "maths()"
+snippet syf "A final answer evaluated with sympy - visually select the answer, press tab, syf, tab"  
+`!p
+from sympy import *
+from latex2sympy2 import latex2sympy
+eng_pow = [12, 9, 6, 3, 0, -3, -6, -9, -12]
+answer = float(latex2sympy(snip.v.text).evalf())
+exp = "0"
+for pow in eng_pow:
+	if answer >= 10**pow:
+		answer = answer/10**pow
+		exp = str(pow)
+		break
+answer = str(sympify(answer).round(3))
+while "." in answer and answer.endswith("0"):
+    answer = answer[:-1]
+if answer.endswith("."):
+    answer = answer[:-1]
+
+if exp != "0":
+	answer += "\cdot 10^{"+exp+"}"
+
+snip.rv = answer
+`
+endsnippet
+
+
+context "maths()"
+snippet set "Creates a new set"
+	\left\{ ${1:${VISUAL:}} \right\}
+endsnippet
+
+snippet gph "Creates a new graph" bA
+\begin{adjustbox}{width=\textwidth}
+\begin{tikzpicture}
+	\begin{axis}[axis x line=middle, axis y line=middle, ymax=$1, ymin=$2, grid=both]
+		\addplot[domain=$2:$1, black, ultra thick, samples=200] {$3};
+	\end{axis}
+\end{tikzpicture}
+\end{adjustbox}
+endsnippet
+
+context "maths()"
+snippet mt "Creates a new matrix" i 
+\begin{pmatrix}$1\end{pmatrix}
+endsnippet
+
+context "maths()"
+snippet vc "Creates a vector" 
+\overrightarrow{$1}
+endsnippet
+
+snippet vc "Creates a vector"
+\$\overrightarrow{$1}$2\$
+endsnippet
+
+snippet vcmg "Creates a vector magnitude"
+\$\lvert\underline{$1}\rvert\$
+endsnippet
+
+context "maths()"
+snippet vcmg "Creates a vector magnitude"
+\lvert\underline{$1}\rvert
+endsnippet
+
+context "maths()"
+snippet => "Creates a therefore symbol" A 
+\therefore 
+endsnippet
+

@@ -1,0 +1,110 @@
+global !p
+def maths():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+endglobal
+
+context "maths()"
+# Snippet for fractions
+snippet ff "The LaTeX \frac{}{} command" i
+\frac{$1}{$2}$0
+endsnippet
+
+context "maths()"
+# Snippet for creating a text tag
+snippet tt "The LaTeX \text{} command" A
+\text{ $1 }$0
+endsnippet
+
+# Snippet for beginning and ending a new environment
+snippet env "New LaTeX environment" bA
+\begin{$1}
+    ${2:${VISUAL:}}
+\end{$1}
+$0
+endsnippet
+
+# Snippet for inline maths
+snippet mm "New inline maths" wA
+\$$1\$
+endsnippet
+
+# Snippet for inserting a new package
+snippet pkg "New package" A
+\usepackage{$1}
+endsnippet
+
+# Snippet for creating mathbb command
+snippet bb "New LaTeX \mathbb command" i
+\mathbb{$1}
+endsnippet
+
+# Snippet for creating a generic command
+snippet cm "New LaTeX command" wA
+\\$1{${2:${VISUAL:}}}
+endsnippet
+
+# Snippet for including an image
+snippet fx "New image with caption and label"
+\includegraphics[width=$1\textwidth]{${2:filename}}
+\captionof{figure}{ $3 } \label{$2}
+endsnippet
+
+# Snippet for bolding text
+snippet bf "New Latex \textbf command" w
+\textbf{${1:${VISUAL:}}}
+endsnippet
+
+# Snippet for italicising text
+snippet it "New Latex \textit command" w
+\textit{${1:${VISUAL:}}}
+endsnippet
+
+# Formatting - wrap it in a box
+snippet bx "Box" bA
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'` \linebreak 
+│ $1 │ \linebreak 
+`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+$0
+endsnippet
+
+# Automatically wrap subscripts
+context "maths()"
+snippet '([A-Za-z])_(\d)' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`$1}$0
+endsnippet
+
+# Automatically wrap superscripts
+snippet '([A-Za-z])\^(\d)' "auto superscript" wrA
+`!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2)`$1}$0
+endsnippet
+
+# -> to \rightarrow
+snippet '->' "convert to \rightarrow" wrA
+\rightarrow  
+endsnippet
+
+# Reference
+snippet rf "Insert a basic reference" w 
+(see \nameref{$1} on page \pageref{$1})
+endsnippet
+
+# Section
+snippet sc "Insert a labelled section" bA
+\section{$1} \label{$2}
+endsnippet
+
+snippet ssc "Insert a labelled subsection" bA
+\subsection{$1} \label{$2}
+endsnippet
+
+snippet t "Indents at the start of a new line" bA
+\indent 
+endsnippet
+
+snippet deg "Add degree symbol" sm
+^{\circ}
+endsnippet
+
+snippet vrb "Add verb" w
+\verb|$1| $2
+endsnippet

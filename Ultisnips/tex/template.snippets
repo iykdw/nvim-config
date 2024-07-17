@@ -1,0 +1,128 @@
+snippet cspre "A maths cheatsheet preamble"
+\documentclass[a4paper]{article}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{indentfirst}
+\usepackage{tikz}
+\usepackage{fp}
+\usepackage{geometry}
+
+\usetikzlibrary{positioning}
+
+\setlength\parindent{1.6em}
+\geometry{margin=1in}
+
+\newcommand{\mpindent}{\setlength\parindent{1.6em}}
+\makeatletter
+\let\@minipagerestore=\mpindent %
+\makeatother
+
+\synctex=1
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhead[R]{$1}
+\fancyhead[L]{\today}
+\fancyfoot[C]{Yasha Duncan-Wilson yasha@duncan-wilson.co.uk}
+\fancyfoot[R]{\thepage}
+$2
+\end{document}
+endsnippet
+
+snippet cspage "A maths cheatsheet page"
+\section*{$1}
+\subsection*{$2}
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\indent $3
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+\notag
+\begin{align*}
+${4:1=1}
+\end{align*}
+\end{minipage}
+\end{center}
+
+\subsection*{$5}
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\indent $6
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+\notag
+\begin{align*}
+${6:1=1}
+\end{align*}
+\end{minipage}
+\end{center}
+
+\subsection*{Examples}
+\begin{center}
+    \par\noindent \rule{\textwidth}{0pt}
+    \begin{minipage}[t][.1\textheight]{0.31\textwidth}
+        \vspace{0pt}
+    \hspace{-1.6em}$7
+	\begin{align*}
+		${8:1=1}
+    \end{align*}
+\end{minipage}
+\hfill\vrule height 10pt depth 0.25\textheight \hfill
+\begin{minipage}[t][.1\textheight]{0.31\textwidth}
+    \vspace{0pt}
+    \hspace{-1.6em}$9
+	\begin{align*}
+		${10:1=1}
+    \end{align*}
+\end{minipage}
+\hfill\vrule height 10pt depth 0.25\textheight \hfill
+\begin{minipage}[t][.1\textheight]{0.31\textwidth}
+	$11
+    \begin{align*}
+	${11:1=1}
+    \end{align*}
+        
+\end{minipage}
+\end{center}
+\pagebreak
+endsnippet
+
+snippet mp "A LaTeX minipage" b
+\begin{minipage}[t]{$1\textwidth}
+${2:${VISUAL:}}
+\end{minipage}
+endsnippet
+
+snippet ex "A set of three minipages for examples" b
+\subsection*{Examples}
+\begin{center}
+    \par\noindent \rule{\textwidth}{0pt}
+    begin{minipage}[t][.1\textheight]{0.31\textwidth}
+        \vspace{0pt}
+    \hspace{-1.6em}$1
+	\begin{align*}
+		$2
+    \end{align*}
+\end{minipage}
+\hfill\vrule height 10pt depth 0.25\textheight \hfill
+\begin{minipage}[t][.1\textheight]{0.31\textwidth}
+    \vspace{0pt}
+    \hspace{-1.6em}$3
+	\begin{align*}
+		$4
+    \end{align*}
+\end{minipage}
+\hfill\vrule height 10pt depth 0.25\textheight \hfill
+\begin{minipage}[t][.1\textheight]{0.31\textwidth}
+	$5
+    \begin{align*}
+	$6
+    \end{align*}
+        
+\end{minipage}
+\end{center}
+
+endsnippet
+
+
