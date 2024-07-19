@@ -26,6 +26,8 @@ let g:UltiSnipsEditSplit="horizontal"
 let g:vimtex_view_method = 'skim'
 let g:vimtex_compiler_latexmk = {'options' : ['-shell-escape', '-synctex=1'],}
 let g:vimtex_compiler_method = 'latexmk'
+set conceallevel=1
+let g:tex_conceal='abdmg'
 
 let g:ale_tex_latexindent_options='/opt/homebrew/bin/latexindent -m -'
 let g:ale_linters={
