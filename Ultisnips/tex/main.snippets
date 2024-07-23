@@ -3,18 +3,6 @@ def maths():
 	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
 endglobal
 
-context "maths()"
-# Snippet for fractions
-snippet ff "The LaTeX \frac{}{} command" i
-\frac{$1}{$2}$0
-endsnippet
-
-context "maths()"
-# Snippet for creating a text tag
-snippet tt "The LaTeX \text{} command" A
-\text{ $1 }$0
-endsnippet
-
 # Snippet for beginning and ending a new environment
 snippet env "New LaTeX environment" bA
 \begin{$1}
@@ -65,17 +53,6 @@ snippet bx "Box" bA
 │ $1 │ \linebreak 
 `!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
 $0
-endsnippet
-
-# Automatically wrap subscripts
-context "maths()"
-snippet '([A-Za-z])_(\d)' "auto subscript" wrA
-`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`$1}$0
-endsnippet
-
-# Automatically wrap superscripts
-snippet '([A-Za-z])\^(\d)' "auto superscript" wrA
-`!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2)`$1}$0
 endsnippet
 
 # -> to \rightarrow

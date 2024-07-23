@@ -95,3 +95,40 @@ snippet ddx "Insert the differential expression dn/dx" Ai
 \frac{d$1}{dx}
 endsnippet
 
+context "maths()"
+# Snippet for fractions
+snippet ff "The LaTeX \frac{}{} command" iA
+\frac{$1}{$2}$0
+endsnippet
+
+context "maths()"
+# Snippet for creating a text tag
+snippet tt "The LaTeX \text{} command" A
+\text{ $1 }$0
+endsnippet
+
+context "maths()"
+snippet ^ "Superscript" iA
+^{$1}
+endsnippet
+
+context "maths()"
+snippet _ "Subscript" iA
+_{$1}
+endsnippet
+
+context "maths()"
+snippet ii "Indefinite Integral" iA
+\int $1 d${2:x}
+endsnippet
+
+context "maths()"
+snippet di "Definite integral" Ai
+\int_{$1}^{$2} $3 d${4:x}
+endsnippet
+
+context "maths()"
+snippet lim "Limit" iA
+\lim_{$1 \to $2}
+endsnippet
+

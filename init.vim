@@ -5,7 +5,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'honza/vim-snippets'
 Plug 'lervag/vimtex'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'airblade/vim-gitgutter'
@@ -62,7 +61,7 @@ function! s:TexFocusVim() abort
   " Replace `TERMINAL` with the name of your terminal application
   " Example: execute "!open -a iTerm"  
   " Example: execute "!open -a Alacritty"
-  silent execute "!open -a Terminal"
+  silent execute "!open -a kitty"
   redraw!
 endfunction
 
