@@ -3,7 +3,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
 
-colorscheme catppuccin
 
 filetype plugin indent on
 set number
@@ -53,6 +52,7 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 call plug#end()
 
+colorscheme catppuccin
 
 " Let nvim function inside a python virtualenv
 if exists("$VIRTUAL_ENV")
@@ -81,7 +81,7 @@ let g:ale_fixers = {
 " For some reason I need to it like this for tex
 let g:ale_fixers['tex'] = get(g:ale_fixers, 'latexindent', []) + ['latexindent']
 
-" Real-time LaTeX 
+" Real-time LaTeX
 nmap <localleader>fs <plug>(vimtex-view)
 nmap <localleader>c <plug>(vimtex-compile)
 let g:vimtex_view_method = 'skim'
@@ -91,7 +91,7 @@ set conceallevel=1
 let g:tex_conceal='abdmg'
 let g:ale_tex_latexindent_options='/opt/homebrew/bin/latexindent -m -'
 
-" Reverse search from Skim 
+" Reverse search from Skim
 function! s:TexFocusVim() abort
   " Replace `TERMINAL` with the name of your terminal application
   silent execute "!open -a kitty"
@@ -107,4 +107,3 @@ augroup END
 " I only seem to need these for JS
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType javascriptreact setlocal shiftwidth=4 tabstop=4 expandtab
-
