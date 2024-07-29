@@ -85,3 +85,13 @@ endsnippet
 snippet vrb "Add verb" w
 \verb|$1| $2
 endsnippet
+
+snippet tbl "Insert a tabular table" 
+\begin{tabular}{|c|c|c|}
+	\hline
+	${1:Column 1} & ${2:Column 2} & ${3:Column 3} \\
+	\hline
+	$4
+	\hline
+\end{tabular}
+endnippet
