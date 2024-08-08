@@ -9,11 +9,7 @@ set number
 syntax enable
 
 let maplocalleader="]"
-
-" Trigger autocomplete and move through it using TAB
-inoremap <silent><expr><TAB>
-    \ pumvisible() ? “\<C-n>” : “\<TAB>”
-
+"
 " Go to definition
 nmap <localleader>def :ALEGoToDefinition<CR>
 " Find Reference
@@ -33,10 +29,10 @@ let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
 
 " Whitespace n such
-set softtabstop=4
-set tabstop=4
-set shiftwidth=4
-set expandtab
+"set softtabstop=4
+"set tabstop=4
+"set shiftwidth=4
+"set expandtab
 
 
 call plug#begin('~/.vim/plugged')
@@ -61,7 +57,6 @@ else
     let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
 endif
 
-
 " UltiSnips definitions
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -69,14 +64,18 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="horizontal"
 
 let g:ale_linters={
-\    'python': ['ruff', 'flake8']
+\    'python': ['ruff', 'flake8', 'mypy'],
+\    'rust': ['cargo', 'analyzer'],
 \}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\	'python': ['black', 'ruff'],
+\	'python': ['black', 'ruff', 'reorder-python-imports'],
 \   'javascript': ['prettier'],
 \   'rust': ['rustfmt'],
 \}
+
+let g:ale_rust_cargo_use_clippy = 1
+let g:ale_detail = 1 " show detailed messages
 
 " For some reason I need to it like this for tex
 let g:ale_fixers['tex'] = get(g:ale_fixers, 'latexindent', []) + ['latexindent']
@@ -89,7 +88,7 @@ let g:vimtex_compiler_latexmk = {'options' : ['-shell-escape', '-synctex=1'],}
 let g:vimtex_compiler_method = 'latexmk'
 set conceallevel=1
 let g:tex_conceal='abdmg'
-let g:ale_tex_latexindent_options='/opt/homebrew/bin/latexindent -m -'
+let g:ale_tex_latexindent_options='/opt/homebrew/bin/latexindent -m -
 
 " Reverse search from Skim
 function! s:TexFocusVim() abort
@@ -102,6 +101,11 @@ augroup vimtex_event_focus
   au!
   au User VimtexEventViewReverse call s:TexFocusVim()
 augroup END
+
+
+" Trigger autocomplete and move through it using TAB
+inoremap <expr><silent> <Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><silent> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 
 " I only seem to need these for JS

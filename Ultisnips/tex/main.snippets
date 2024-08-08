@@ -49,19 +49,19 @@ endsnippet
 
 # Formatting - wrap it in a box
 snippet bx "Box" bA
-`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'` \linebreak 
-│ $1 │ \linebreak 
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'` \linebreak
+│ $1 │ \linebreak
 `!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
 $0
 endsnippet
 
 # -> to \rightarrow
 snippet '->' "convert to \rightarrow" wrA
-\rightarrow  
+\rightarrow
 endsnippet
 
 # Reference
-snippet rf "Insert a basic reference" w 
+snippet rf "Insert a basic reference" w
 (see \nameref{$1} on page \pageref{$1})
 endsnippet
 
@@ -75,7 +75,7 @@ snippet ssc "Insert a labelled subsection" bA
 endsnippet
 
 snippet t "Indents at the start of a new line" bA
-\indent 
+\indent
 endsnippet
 
 snippet deg "Add degree symbol" sm
@@ -86,7 +86,7 @@ snippet vrb "Add verb" w
 \verb|$1| $2
 endsnippet
 
-snippet tbl "Insert a tabular table" 
+snippet tbl "Insert a tabular table"
 \begin{tabular}{|c|c|c|}
 	\hline
 	${1:Column 1} & ${2:Column 2} & ${3:Column 3} \\
@@ -94,4 +94,4 @@ snippet tbl "Insert a tabular table"
 	$4
 	\hline
 \end{tabular}
-endnippet
+endsnippet
