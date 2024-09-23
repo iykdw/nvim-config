@@ -3,19 +3,17 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
 
-
 filetype plugin indent on
 set number
 syntax enable
 
 let maplocalleader="]"
 "
+"
 " Go to definition
 nmap <localleader>def :ALEGoToDefinition<CR>
 " Find Reference
 nmap <localleader>ref :ALEFindReferences<CR>
-
-
 
 set omnifunc=ale#completion#OmniFunc
 let g:ale_completion_enabled = 1
@@ -29,19 +27,16 @@ let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
 
 " Whitespace n such
-"set softtabstop=4
-"set tabstop=4
-"set shiftwidth=4
-"set expandtab
+set softtabstop=4
+set tabstop=4
+set shiftwidth=4
+set expandtab
 
 
 call plug#begin('~/.vim/plugged')
 
 Plug 'lervag/vimtex'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-surround'
-Plug 'Chiel92/vim-autoformat'
 Plug 'dense-analysis/ale'
 Plug 'cespare/vim-toml'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
@@ -64,12 +59,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="horizontal"
 
 let g:ale_linters={
-\    'python': ['ruff', 'flake8', 'mypy'],
+\    'python': ['ruff', 'flake8', 'mypy', "pyright", "pydocstyle"],
 \    'rust': ['cargo', 'analyzer'],
 \}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\	'python': ['black', 'ruff', 'reorder-python-imports'],
+\	'python': ['black', 'ruff', 'reorder-python-imports', "add_blank_lines_for_python_control_statements", "autopep8"],
 \   'javascript': ['prettier'],
 \   'rust': ['rustfmt'],
 \}
@@ -88,7 +83,7 @@ let g:vimtex_compiler_latexmk = {'options' : ['-shell-escape', '-synctex=1'],}
 let g:vimtex_compiler_method = 'latexmk'
 set conceallevel=1
 let g:tex_conceal='abdmg'
-let g:ale_tex_latexindent_options='/opt/homebrew/bin/latexindent -m -
+let g:ale_tex_latexindent_options='/opt/homebrew/bin/latexindent -m -'
 
 " Reverse search from Skim
 function! s:TexFocusVim() abort
@@ -101,11 +96,6 @@ augroup vimtex_event_focus
   au!
   au User VimtexEventViewReverse call s:TexFocusVim()
 augroup END
-
-
-" Trigger autocomplete and move through it using TAB
-inoremap <expr><silent> <Tab> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><silent> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 
 " I only seem to need these for JS

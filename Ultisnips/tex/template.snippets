@@ -83,7 +83,7 @@ ${6:1=1}
     \begin{align*}
 	${12:1=1}
     \end{align*}
-        
+
 \end{minipage}
 \end{center}
 \pagebreak
@@ -120,10 +120,15 @@ snippet ex "A set of three minipages for examples" b
     \begin{align*}
 	$6
     \end{align*}
-        
+
 \end{minipage}
 \end{center}
 
 endsnippet
 
-
+snippet img "Insert an image" b
+\centering
+\includegraphics[\textwidth]{$1}
+\captionof{figure}{$2}
+\label{fig:$1}
+endsnippet
