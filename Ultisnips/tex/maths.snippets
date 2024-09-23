@@ -16,7 +16,7 @@ snip.rv = latex2latex(match.group(1))
 endsnippet
 
 context "maths()"
-snippet syf "A final answer evaluated with sympy - visually select the answer, press tab, syf, tab"  
+snippet syf "A final answer evaluated with sympy - visually select the answer, press tab, syf, tab"
 `!p
 from sympy import *
 from latex2sympy2 import latex2sympy
@@ -58,12 +58,12 @@ snippet gph "Creates a new graph" bA
 endsnippet
 
 context "maths()"
-snippet mt "Creates a new matrix" i 
+snippet mt "Creates a new matrix" i
 \begin{pmatrix}$1\end{pmatrix}
 endsnippet
 
 context "maths()"
-snippet vc "Creates a vector" 
+snippet vc "Creates a vector"
 \overrightarrow{$1}
 endsnippet
 
@@ -81,8 +81,8 @@ snippet vcmg "Creates a vector magnitude"
 endsnippet
 
 context "maths()"
-snippet => "Creates a therefore symbol" A 
-\therefore 
+snippet => "Creates a therefore symbol" A
+\therefore
 endsnippet
 
 context "maths()"
@@ -134,6 +134,10 @@ endsnippet
 
 context "maths()"
 snippet inf "Infinity" Ai
-\infty 
+\infty
 endsnippet
 
+context "maths()"
+snippet sum "The summing function" A
+\Sigma_{i=$1}^{$2}
+endsnippet
