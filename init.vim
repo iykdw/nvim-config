@@ -8,16 +8,32 @@ set number
 syntax enable
 
 let maplocalleader="]"
-"
-"
-" Go to definition
-nmap <localleader>def :ALEGoToDefinition<CR>
-" Find Reference
-nmap <localleader>ref :ALEFindReferences<CR>
 
-set omnifunc=ale#completion#OmniFunc
-let g:ale_completion_enabled = 1
-let g:ale_completion_autoimport = 1
+
+"   LSP Actions
+"
+" Show available code actions
+nnoremap <localleader>act :lua vim.lsp.buf.code_action()<CR>
+" Rename token under cursor
+nnoremap <localleader>ren :lua vim.lsp.buf.rename()<CR>
+" Jump to definition
+nnoremap <localleader>def :lua vim.lsp.buf.definition()<CR>
+" Show all references
+nnoremap <localleader>ref :lua vim.lsp.buf.references()<CR>
+" Format code
+nnoremap <localleader>fmt :lua vim.lsp.buf.format()<CR>
+
+" Show file explorer
+nnoremap <localleader>e :NERDTreeToggle<CR>
+
+" Status Line
+
+" Run Rust
+nnoremap <localleader>cr :!cargo run<CR>
+" Build Rust
+nnoremap <localleader>cb :!cargo build<CR>
+" Test Rust
+nnoremap <localleader>ct :!cargo test<CR>
 
 let g:ale_sign_column_always = 1
 let g:ale_fix_on_save = 1
@@ -57,6 +73,8 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="horizontal"
 
+" ALE
+
 let g:ale_linters={
 \    'python': ['ruff', 'flake8', 'mypy', "pyright", "pydocstyle"],
 \    'rust': ['cargo', 'analyzer'],
@@ -91,10 +109,15 @@ function! s:TexFocusVim() abort
   redraw!
 endfunction
 
+
+" Reverse search focus
 augroup vimtex_event_focus
   au!
   au User VimtexEventViewReverse call s:TexFocusVim()
 augroup END
+
+" Fix gutentags
+let g:gutentags_ctags_executable = '/opt/homebrew/bin/ctags'
 
 
 " I only seem to need these for JS
