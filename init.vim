@@ -55,8 +55,13 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'dense-analysis/ale'
 Plug 'cespare/vim-toml'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'sirVer/ultisnips'
+Plug 'neovim/nvim-lspconfig'
+Plug 'mfussenegger/nvim-lint'
+Plug 'nvim-lint'
 
 call plug#end()
+
 
 colorscheme catppuccin
 
@@ -68,6 +73,7 @@ else
 endif
 
 " UltiSnips definitions
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/Ultisnips']
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
@@ -75,14 +81,16 @@ let g:UltiSnipsEditSplit="horizontal"
 
 " ALE
 
+let g:ale_disable_lsp = 1
 let g:ale_linters={
-\    'python': ['ruff', 'flake8', 'mypy', "pyright", "pydocstyle"],
+\    'python': ['ruff', 'pyright'],
 \    'rust': ['cargo', 'analyzer'],
 \}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\	'python': ['black', 'ruff', 'reorder-python-imports', "add_blank_lines_for_python_control_statements", "autopep8"],
+\	'python': ['ruff', 'reorder-python-imports'],
 \   'javascript': ['prettier'],
+\   'html': ['djhtml'],
 \   'rust': ['rustfmt'],
 \}
 
@@ -91,6 +99,100 @@ let g:ale_detail = 1 " show detailed messages
 
 " For some reason I need to it like this for tex
 let g:ale_fixers['tex'] = get(g:ale_fixers, 'latexindent', []) + ['latexindent']
+
+lua <<EOF
+-- LSP Config
+local lspconfig = require('lspconfig')
+
+-- Helper function to handle formatting
+local on_attach = function(client, bufnr)
+    -- Format on save
+    if client.server_capabilities.documentFormattingProvider then
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
+            buffer = bufnr,
+            callback = function()
+                vim.lsp.buf.format()
+            end,
+        })
+    end
+end
+
+-- Python: Pyright
+lspconfig.pyright.setup {
+    on_attach = on_attach,
+    settings = {
+        python = {
+            analysis = {
+                typeCheckingMode = "basic", -- Or "strict"
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+            }
+        }
+    }
+}
+
+-- Rust: rust-analyzer
+lspconfig.rust_analyzer.setup {
+    on_attach = on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            cargo = {
+                allFeatures = true,
+                loadOutDirsFromCheck = true
+            },
+        }
+    }
+}
+
+-- Optional: LaTeX (texlab)
+--lspconfig.texlab.setup {
+--    on_attach = on_attach,
+--    settings = {
+--        texlab = {
+--            build = {
+--                executable = "latexmk",
+--                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+--                onSave = true
+--            },
+--            forwardSearch = {
+--                executable = "skim",
+--                args = { "--synctex-forward", "%l:1:%f", "%p" }
+--            },
+--            chktex = {
+--                onEdit = true,
+--                onOpenAndSave = true
+--            }
+--        }
+--    }
+--}
+
+-- Linter configuration
+-- Load the nvim-lint plugin
+local lint = require("lint")
+
+-- Configure linting for different file types
+lint.linters = {
+    python = { "ruff", "flake8" }, -- Use ruff and flake8 for Python
+    javascript = { "eslint" },     -- Use eslint for JavaScript
+    typescript = { "eslint" },     -- Use eslint for TypeScript
+    rust = { "cargo" },            -- Use cargo for Rust
+    lua = { "luacheck" },          -- Use luacheck for Lua
+    go = { "golangci-lint" },      -- Use golangci-lint for Go
+    -- You can add more linters for other languages here...
+}
+
+-- Enable nvim-lint on the current buffer
+vim.api.nvim_exec([[
+  augroup Linting
+    autocmd!
+    autocmd BufWritePost * lua require('lint').try_lint()
+  augroup END
+]], false)
+
+EOF
+
+
 
 " Real-time LaTeX
 nmap <localleader>fs <plug>(vimtex-view)
@@ -119,6 +221,11 @@ augroup END
 " Fix gutentags
 let g:gutentags_ctags_executable = '/opt/homebrew/bin/ctags'
 
+" Code folding for python
+set foldmethod=indent
+nnoremap <space> za
+vnoremap <space> zf
+set foldlevel=9
 
 " I only seem to need these for JS
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 expandtab
